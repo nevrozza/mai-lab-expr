@@ -31,10 +31,24 @@ void Name##_push(Name *s, Type item) { \
         s->data[s->count++] = item; \
     } \
 \
-Type Name##_pop(Name *s) { return s->data[--s->count]; } \
-Type Name##_peek(Name *s) { return s->data[s->count - 1]; } \
-bool Name##_is_empty(Name *s) { return s->count == 0; } \
-void Name##_destroy(Name *s) { free(s->data); free(s); }
+Type Name##_pop(Name *s) { \
+    if (Name##_is_empty(s)) { \
+        fatal_error("can't pop from empty stack (" #Name ")"); \
+    } \
+    return s->data[--s->count]; \
+} \
+\
+Type Name##_peek(Name *s) { \
+    if (Name##_is_empty(s)) { \
+        fatal_error("can't peek in empty stack (" #Name ")"); \
+    } \
+    return s->data[s->count - 1]; \
+} \
+\
+bool Name##_is_empty(Name *s) { \
+    return s == NULL || s->count == 0; \
+} \
+void Name##_destroy(Name *s) { if (s) { free(s->data); free(s); } }
 
-DEFINE_STACK(Token, token_stack)
-DEFINE_STACK(Node*, node_stack)
+DEFINE_STACK(Token, TokenStack)
+DEFINE_STACK(Node*, NodeStack)

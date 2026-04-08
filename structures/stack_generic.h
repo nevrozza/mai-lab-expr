@@ -20,7 +20,7 @@ bool Name##_is_empty(Name *s); \
 void Name##_destroy(Name *s);
 
 
-DECLARE_STACK(Token, token_stack)
-DECLARE_STACK(Node*, node_stack)
+DECLARE_STACK(Token, TokenStack)
+DECLARE_STACK(Node*, NodeStack)
 
 #endif //EXPR_STACK_GENERIC_H

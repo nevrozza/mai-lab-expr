@@ -9,4 +9,6 @@ add_executable(expr main.c
         structures/stack_generic.h
         structures/stack_generic.c
         utils/utils.c
-        utils/utils.h)
+        utils/utils.h
+        structures/queue.c
+        structures/queue.h)
