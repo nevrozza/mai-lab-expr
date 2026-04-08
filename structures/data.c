@@ -17,12 +17,14 @@ int read_next_token(Token *t) {
     } else if (isalpha(c)) {
         int i = 0;
         while (isalnum(c)) {
-            t->data.name[i++] = (char) c;
+            t->data.var.name[i++] = (char) c;
             c = getchar();
         }
-        t->data.name[i] = '\0';
+        t->data.var.name[i] = '\0';
         ungetc(c, stdin);
-        t->type = TOK_NAME;
+        t->type = TOK_VAR;
+        t->data.var.coef = 1.0;
+        t->data.var.degree = 1;
     } else {
         t->data.sym = (char) c;
         t->type = TOK_SYM;

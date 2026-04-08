@@ -1,13 +1,22 @@
 #ifndef EXPR_DATA_H
 #define EXPR_DATA_H
 
-
 // ------------- TOKENS -------------
-typedef enum {
+
+
+typedef enum TokenType {
     TOK_VAL,
     TOK_SYM,
-    TOK_NAME
+    TOK_VAR
 } TokenType;
+
+// Слагаемое вида 3x^2
+typedef struct Var {
+    double coef;
+    int degree;
+    char name[32];
+} Var;
+
 
 typedef struct Token {
     TokenType type;
@@ -15,7 +24,7 @@ typedef struct Token {
     union {
         double val;
         char sym;
-        char name[32];
+        Var var;
     } data;
 } Token;
 

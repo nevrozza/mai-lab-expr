@@ -31,7 +31,7 @@ Queue *postfix_queue_from_input_expr() {
     while (read_next_token(&t)) {
         switch (t.type) {
             case TOK_VAL:
-            case TOK_NAME:
+            case TOK_VAR:
                 queue_push(output, t);
                 break;
 
@@ -71,7 +71,7 @@ Node *build_tree_from_queue(Queue *q) {
     while (!queue_is_empty(q)) {
         const Token t = queue_pop(q);
 
-        if (t.type == TOK_VAL || t.type == TOK_NAME) {
+        if (t.type == TOK_VAL || t.type == TOK_VAR) {
             NodeStack_push(s, create_node(t, NULL, NULL));
         } else {
             Node *parent = create_node(t, NodeStack_pop(s), NodeStack_pop(s));
