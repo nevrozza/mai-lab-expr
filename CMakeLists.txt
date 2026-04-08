@@ -11,4 +11,6 @@ add_executable(expr main.c
         utils/utils.c
         utils/utils.h
         structures/queue.c
-        structures/queue.h)
+        structures/queue.h
+        solve/solve.c
+        solve/solve.h)
