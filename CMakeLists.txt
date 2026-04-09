@@ -12,5 +12,7 @@ add_executable(expr main.c
         utils/utils.h
         structures/queue.c
         structures/queue.h
-        solve/solve.c
-        solve/solve.h)
+        solve/tree_from_expr.c
+        solve/tree_from_expr.h
+        solve/simplify.c
+        solve/simplify.h)
