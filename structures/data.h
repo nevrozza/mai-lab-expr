@@ -10,13 +10,6 @@ typedef enum TokenType {
     TOK_VAR
 } TokenType;
 
-// Слагаемое вида 3x^2
-typedef struct Var {
-    double coef;
-    int degree;
-    char name[32];
-} Var;
-
 
 typedef struct Token {
     TokenType type;
@@ -24,7 +17,7 @@ typedef struct Token {
     union {
         double val;
         char sym;
-        Var var;
+        char name[32];
     } data;
 } Token;
 
