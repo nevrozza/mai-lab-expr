@@ -64,7 +64,7 @@ Queue *postfix_queue_from_input_expr() {
                                    (t.type == TOK_SYM && t.data.sym == '('));
 
             if (prev_before_mul && curr_after_mul) {
-                const Token mul_t = {TOK_SYM, '*'};
+                const Token mul_t = {.type = TOK_SYM, .data.sym = '*'};
                 process_sym_token(mul_t, ops, output);
             }
         }
