@@ -2,6 +2,7 @@
 #define EXPR_UTILS_H
 
 void fatal_error(char msg[]);
+void soft_error(const char msg[]);
 
 void fatal_memory_error();
 
