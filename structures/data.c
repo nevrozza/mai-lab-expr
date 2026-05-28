@@ -16,10 +16,13 @@ int read_next_token(Token *t) {
         t->type = TOK_VAL;
     } else if (isalpha(c)) {
         int i = 0;
-        while (isalnum(c)) {
-            t->data.name[i++] = (char) c;
+        while (isalnum(c) || c == '^' || (c == '-' && i > 0 && t->data.name[i - 1] == '^')) {
+            if (i < 31) {
+                t->data.name[i++] = (char) c;
+            }
             c = getchar();
         }
+
         t->data.name[i] = '\0';
         ungetc(c, stdin);
         t->type = TOK_VAR;
