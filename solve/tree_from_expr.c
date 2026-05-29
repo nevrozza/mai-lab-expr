@@ -128,7 +128,7 @@ Queue *postfix_queue_from_input_expr() {
                 prev_type = TOK_SYM;
                 prev_sym = '+';
                 continue;
-            } else {
+            } else if (t.data.sym == '*' || t.data.sym == '/') {
                 return error(ops, output, "Выражение не может начинаться с операторов '*' или '/'");
             }
         }
