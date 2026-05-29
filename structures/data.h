@@ -26,9 +26,15 @@ int read_next_token(Token *t);
 
 // ------------- TREE -------------
 typedef struct Node {
-    Token tok;
-    struct Node *left;
-    struct Node *right;
+    Token t;
+    struct Node *l;
+    struct Node *r;
 } Node;
+
+void free_tree(Node *node);
+Node *create_node(Token t, Node *r, Node *l);
+
+Node *create_val_node(double val);
+Node *create_var_node(const char name[]);
 
 #endif //EXPR_DATA_H

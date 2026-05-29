@@ -38,18 +38,6 @@ static int get_priority(const char sym) {
     return 0;
 }
 
-static Node *create_node(Token t, Node *r, Node *l) {
-    Node *n = malloc(sizeof(Node));
-    if (!n) {
-        fatal_memory_error();
-        return NULL;
-    }
-    n->tok = t;
-    n->left = l;
-    n->right = r;
-    return n;
-}
-
 static void process_sym_token(Token t, TokenStack *ops, Queue *output) {
     if (t.data.sym == '(') {
         TokenStack_push(ops, t);
