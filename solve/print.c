@@ -87,7 +87,8 @@ void print_tree_from_node(const Node *node) {
         printf("Нечего принтить =(\n");
         return;
     }
+    printf("       ");
     print_node_data(node);
-    if (node->l) print_tree_helper(node->l, "", node->r == NULL);
-    if (node->r) print_tree_helper(node->r, "", true);
+    if (node->l) print_tree_helper(node->l, "       ", node->r == NULL);
+    if (node->r) print_tree_helper(node->r, "       ", true);
 }
