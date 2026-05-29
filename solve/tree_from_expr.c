@@ -32,7 +32,7 @@ static bool is_math_sym(char sym) {
 
 
 // ======= АЛГОРИТМ =======
-static int get_priority(const char sym) {
+int get_priority(const char sym) {
     if (sym == '*' || sym == '/') return 2;
     if (sym == '+' || sym == '-') return 1;
     return 0;

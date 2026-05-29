@@ -15,4 +15,9 @@ add_executable(expr main.c
         solve/tree_from_expr.c
         solve/tree_from_expr.h
         solve/simplify.c
-        solve/simplify.h)
+        solve/simplify.h
+        solve/print.c
+        solve/print.h
+        solve/simplify_utils.h
+        solve/simplify_utils.c
+)
