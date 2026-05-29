@@ -142,37 +142,47 @@ static Node *try_combine_like_terms(Node *node, const char op, bool *changed) {
     return node;
 }
 
+
+// Раньше была проблема – после каждого изменения приходилось спускаться с самой вершины дерева вниз.
+// Теперь мы локализируем кусочки (и бегаем в пределах этого кусочка), и если они перестают изменяться – поднимаемся выше, увеличивая кусочек
+// (увеличение кусочка происходит после return)
+static Node *simplify_node_locally(Node *node) {
+    bool local_changed = true;
+
+    while (local_changed && node && node->t.type == TOK_SYM) {
+        local_changed = false;
+        const char op = node->t.data.sym;
+
+        node = try_fold_consts(node, op, &local_changed);
+        if (local_changed) {
+            continue;
+        }
+
+        node = try_combine_like_terms(node, op, &local_changed);
+        if (local_changed) {
+            continue;
+        }
+
+        node = try_simplify_trash(node, op, &local_changed);
+    }
+    return node;
+}
+
+
+// ====== КОММЕНТАРИИ К СТАРОЙ ФУНКЦИИ ======
+// СМ. комменты к simplify_node_locally – ниже устаревшые комменты к версии, когда после каждого изменения, упрощение начиналось заново сверху
 // НАЧИНАЕТ СНИЗУ
 // Свёртка констант: 1 + 1 = 2 (+ и / тоже работают)
 // Приведение подобных членов
 // Упрощение: x+0 = x, 0+x = x, x-0 = x, x*1 = x, 1*x = x, x*0 = 0
-static Node *simplify_expression(Node *node, bool *changed) {
-    if (!node) return NULL;
-
-    node->l = simplify_expression(node->l, changed);
-    node->r = simplify_expression(node->r, changed);
-
-    if (node->t.type == TOK_SYM) {
-        char op = node->t.data.sym;
-
-        node = try_fold_consts(node, op, changed);
-        if (*changed) return node;
-
-        node = try_combine_like_terms(node, op, changed);
-        if (*changed) return node;
-
-        node = try_simplify_trash(node, op, changed);
-    }
-
-    return node;
-}
+// static Node *simplify_expression(Node *node) {
+// }
 
 Node *simplify(Node *node) {
-    bool changed = true;
-    while (changed) {
-        // Цикл, пока дерево не перестанет меняться
-        changed = false;
-        node = simplify_expression(node, &changed);
-    }
-    return node;
+    if (!node) return NULL;
+
+    node->l = simplify(node->l);
+    node->r = simplify(node->r);
+
+    return simplify_node_locally(node);
 }
